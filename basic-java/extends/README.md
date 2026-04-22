@@ -1,4 +1,4 @@
-#  继承（extends）1
+#  一.继承（extends）
 
 ## 👨‍🏫 案例：Person 类继承
 这是我在学习继承时的练习。
@@ -78,7 +78,7 @@ class Student extends Person{...}
 
 markdown
 
-# 继承的练习(自设计一个体系) 画图法
+# 二.继承的练习(自设计一个体系) 画图法
 
 ## 一、案例背景
 现有四种动物：布偶猫、中国狸花猫、哈士奇、泰迪
@@ -188,7 +188,7 @@ class Teddy extends Dog {
 2. 设计顺序：先分析具体类共性 -> 抽取父类 -> 子类继承父类扩展特有行为
 3. 代码顺序：先敲父类，在敲子类（顶层父类 -> 中间父类 -> 具体子类）
 
-# extend 2
+# 三.extend 2
 
 ---
 
@@ -250,3 +250,157 @@ public class Zi extends Fu {
 - 示例：
   ```java
   super.eat(); // 调用父类的 eat() 方法
+
+
+
+
+
+# 四.继承中方法重写
+
+> 方法重写：出现在**继承关系**中。
+
+### 1. 方法重写的定义
+当父类的方法不能满足子类现在的需求时，需要对方法进行**方法重写**。
+
+### 2. 书写格式
+在继承体系中，子类出现了和父类中**一模一样**的方法声明，我们就称子类这个方法是重写方法。
+
+### 3. `@Override` 重写注解
+
+> 好处：
+> - 明确表明该方法是重写，而不是子类新增方法，让代码逻辑更清晰。
+> - 如果子类写的这个方法于父类不一样，编译器直接报错，避免开始发者写出错误代码。
+
+- 放在重写方法上，**校验子类重写时语法是否正确**。
+- 加上注解后如果有红色波浪线，表示语法错误。
+- 建议重写方法都加上 `@Override` 注解，代码更安全。
+
+---
+
+### 示例代码
+```java
+// 父类 Person
+class Person {
+    public void eat() {
+        System.out.println("吃饭");
+    }
+
+    public void drink() {
+        System.out.println("喝水");
+    }
+}
+
+// 子类 OverseasStudent 继承 Person
+class OverseasStudent extends Person {
+    @Override
+    public void eat() {
+        // 方法重写：扩展/修改了学生的吃喝方式
+        System.out.println("吃意面");
+    }
+
+    @Override
+    public void drink() {
+        System.out.println("喝奶茶");
+    }
+}
+ 
+ 
+ 
+ 
+方法重写的本质
+ 
+方法重写的本质就是覆盖了父类里的方法。
+ 
+- 子类把父类的方法给覆盖了；
+- 如果还想使用父类的原方法，需要用  super.方法名()  调用。
+ 
+```
+
+我把这页笔记也按 Typora 风格的 Markdown 格式整理好了，你可以直接复制进  .md  文件里：
+
+markdown
+
+# 五.方法重写注意事项和重写要求
+
+### 方法重写的注意事项和要求
+1.  建议：重写的方法尽量和父类保持一致。
+2.  只有**非 private、非 static、非 final** 的方法才能被重写。
+3.  重写方法的名称、形参列表必须与父类一致。
+4.  子类重写父类方法时，子类访问权限 ≥ 父类（权限顺序：` 空着不写< protected < public`）。
+5.  子类重写父类方法时，子类返回类型 ≤ 父类返回类型（例如父类返回 `Object`，子类可以返回 `String`；父类返回 `void`，子类也必须返回 `void`）。
+
+---
+
+### 示例：利用方法重写设计继承结构
+#### 场景描述
+三种动物分别有以下行为：
+- 哈士奇：吃饭（吃狗粮）、喝水、看家、拆家
+- 沙皮狗：吃饭（吃狗粮、吃骨头）、喝水、看家
+- 中华田园犬：吃饭（吃剩饭）、喝水、看家
+
+#### 设计思路
+- 画图：**从下往上抽取共性**，先看子类有什么共性，再提炼出父类。
+- 写代码：**从上往下写**，先写父类，再写子类并根据需要重写方法。
+
+#### 继承结构示意图（文字版）
+```text
+          动物
+     吃饭、喝水、看家
+      /      |      \
+  哈士奇   沙皮狗   中华田园犬
+拆家     吃骨头    吃剩饭
+ 
+ 
+代码实现示例
+ 
+java
+  
+// 父类：动物
+class Animal {
+    public void eat() {
+        System.out.println("吃饭");
+    }
+
+    public void drink() {
+        System.out.println("喝水");
+    }
+
+    public void watchHouse() {
+        System.out.println("看家");
+    }
+}
+
+// 子类：哈士奇
+class Husky extends Animal {
+    @Override
+    public void eat() {
+        System.out.println("吃狗粮");
+    }
+
+    @Override
+    public void watchHouse() {
+        System.out.println("看家，但拆家更在行");
+    }
+
+    // 哈士奇特有的方法
+    public void breakHouse() {
+        System.out.println("拆家");
+    }
+}
+
+// 子类：沙皮狗
+class SharPei extends Animal {
+    @Override
+    public void eat() {
+        System.out.println("吃狗粮、吃骨头");
+    }
+}
+
+// 子类：中华田园犬
+class ChineseRuralDog extends Animal {
+    @Override
+    public void eat() {
+        System.out.println("吃剩饭");
+    }
+}
+ 
