@@ -1,3 +1,5 @@
+#                                继承（extends）讲解
+
 #  一.继承（extends）
 
 ## 👨‍🏫 案例：Person 类继承
@@ -30,7 +32,7 @@ public class 子类 extends 父类 {
 
 ## 继承后子类特点
 
-子类可以得到父类的属性和行为，子类可以使用
+子类可以得到父类的**属性和行为**，子类可以使用
 子类可以在父类的基础上新增其他功能，子类更强大。
 
 ## 继承的特点
@@ -76,7 +78,7 @@ class Person{...}
 class Student extends Person{...}
 ```
 
-markdown
+
 
 # 二.继承的练习(自设计一个体系) 画图法
 
@@ -316,9 +318,7 @@ class OverseasStudent extends Person {
  
 ```
 
-我把这页笔记也按 Typora 风格的 Markdown 格式整理好了，你可以直接复制进  .md  文件里：
 
-markdown
 
 # 五.方法重写注意事项和重写要求
 
@@ -404,3 +404,104 @@ class ChineseRuralDog extends Animal {
     }
 }
  
+
+```
+
+
+
+
+
+# 六、继承中的构造方法
+
+> `super()` 的作用：在子类创建对象时，给父类成员变量初始化。
+
+1.  子类**不能继承**父类的构造方法，但能通过子类构造方法中的 `super()` 调用。
+    > 注意：子类构造方法的第一行语句默认都是 `super()`，不写也存在，且必须在第一行。
+2.  格式：
+    - 调用父类**无参构造**：`super()`
+    - 调用父类**有参构造**：`super(参数)`
+    
+    > 注：`super()` 只能写在构造方法中，且必须在第一行。
+
+### 示例代码
+```java
+// 父类
+public class Person {
+    String name;
+
+    public Person() {
+       System.out.println("哈哈哈"); // 无参构造
+    }
+
+    public Person(String name) {
+        this.name = name;
+    }
+}
+
+// 子类
+class Stu extends Person {
+    public Stu() {
+        super(); // 调用父类无参构造
+    }
+
+    public Stu(String name) {
+        super(name); // 调用父类有参构造
+    }
+}
+ 
+ public class Test {
+    public static void main(String[] args){
+        //Student s1=new Student();
+        Student s2=new Student("张三",18);
+        System.out.println(s2.name+","+s2.age);
+    }
+}
+ 
+```
+
+
+
+---
+
+# 七、`this()` 的使用
+
+> `this()` 的作用：在无参构造中，自动给成员变量赋默认值。
+> `this(...)` 表示调用本类其他构造方法。
+
+### 示例代码
+```java
+public class Dog {
+    String name;
+    int age;
+
+    // 1. 无参构造：给默认值
+    public Dog() {
+        this("旺财", 1); // 调用本类的有参构造
+    }
+
+    // 2. 有参构造：真正赋值
+    public Dog(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+ 
+ 
+-  new Dog()  → 自动得到： name = "旺财" ， age = 1 
+ 
+ 
+ 
+
+
+```
+
+注意事项：
+
+1.  this()  也必须写在构造方法的第一行。
+2.  this()  和  super()  不能同时写在同一个构造方法里（因为都要占第一行）。
+3. 只能在构造方法中使用，普通方法不能用。
+
+###  super()  与  this()  的目的总结
+
+1. 写  super()  的目的：在子类创建对象时，给父类的成员变量赋值。
+2. 写  this()  的目的：在构造方法中，给本类成员变量赋默认值，简化代码。
