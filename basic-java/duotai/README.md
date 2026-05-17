@@ -54,3 +54,53 @@ public static void register(Person p) {
 **多态的好处**:
 
  使用父类类型作为参数，可以接收所有子类对象，代码更简洁、可扩展。
+
+---
+
+## 多态调用成员的特点
+
+### 调用成员变量
+**编译看左边，运行也看左边**
+- Java 编译时会检查父类中有没有这个变量，没有就编译报错。
+- 运行时，实际访问的是父类中定义的变量。
+
+### 调用成员方法
+**编译看左边，运行看右边**
+- 编译时：检查父类中有没有这个方法，没有就编译报错。
+- 运行时：执行的是子类中重写后的方法。
+
+---
+
+### 示例代码
+```java
+// 父类 Person
+class Person {
+    String name = "父类的name";
+    public void show() {
+        System.out.println("父类的show方法");
+    }
+}
+
+// 子类 Student 继承 Person
+class Student extends Person {
+    String name = "子类的name";
+    @Override
+    public void show() {
+        System.out.println("子类的show方法");
+    }
+}
+
+// 多态场景
+public class Test {
+    public static void main(String[] args) {
+        Person p = new Student(); // 父类引用指向子类对象
+
+        // 1. 调用成员变量：编译看左边，运行也看左边
+        System.out.println(p.name); 
+        // 输出：父类的name
+
+        // 2. 调用成员方法：编译看左边，运行看右边
+        p.show(); 
+        // 输出：子类的show方法
+    }
+}
